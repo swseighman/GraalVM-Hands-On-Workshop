@@ -509,11 +509,6 @@ Let's try an example.  In your favorite IDE, create a new Java program called `H
   }
 }```First, let's build it:![User Input](../images/userinput.png)```bash$ javac HelloReflection.java```The main method invokes all methods whose names are passed as command line arguments. Only two methods are provided for simplicity: `foo` and `bar`. Providing any other name on the command line leads to an exception.
 
-![User Input](../images/userinput.png)
-```bash
-$ javac HelloReflection
-```
-
 Run the example:
 
 ![User Input](../images/userinput.png)
