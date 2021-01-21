@@ -4,7 +4,7 @@ This exercise will focus on GraalVM and Spring Boot.
 
 ### Exercise 5.1: Clone the sample SpringBoot Application
 
-Clone the Spring Boot sample applications that uses GraalVM Native Image. Do note that this is developed by Spring framework team and is still in experimental phase.
+Clone the Spring Boot sample application that uses GraalVM Native Image. Do note that this is developed by Spring framework team and is still in an experimental phase.
 
 ![user input](../images/userinput.png)
 

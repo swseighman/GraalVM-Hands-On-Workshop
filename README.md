@@ -17,6 +17,10 @@ In preparation for the workshop, you'll need to ready your system/laptop.
 
 **Connectivity:** You will need access to (online) Github repositories during the workshop, so an Internet connection will be necessary.
 
+**Note**: 
+Throughout the workshop, when you see a red computer icon ![user input](images/userinput.png) it indicates a command that you'll need to enter in your terminal. 
+
+
    
 ## Table of Contents
 
@@ -30,4 +34,4 @@ In preparation for the workshop, you'll need to ready your system/laptop.
 
 **Let's get started!**
 
----<a href="../ex01/">    <img src="../images/noun_Next_511450_100.png"/></a>
+---<a href="../ex00/"><img src="images/noun_Next_511450_100.png"></a>
