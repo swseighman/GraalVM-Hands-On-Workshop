@@ -34,4 +34,4 @@ Throughout the workshop, when you see a red computer icon ![user input](images/u
 
 **Let's get started!**
 
----<a href="../ex00/"><img src="images/noun_Next_511450_100.png"></a>
+---<a href="ex00/"><img src="images/noun_Next_511450_100.png"></a>
