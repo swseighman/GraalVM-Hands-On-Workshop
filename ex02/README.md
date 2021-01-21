@@ -1,8 +1,9 @@
 ## Exercise 2: Ahead-of-Time (AOT) Compilation
 
-In the previous exercise, we discovered that GraalVM Enterprise can boost Java program performance without changing any code.
+### OverviewThe GraalVM native image feature can compile your application (using Ahead-of-Time (AOT) compilation) into a standalone executable.Some of the benefits of native image are:* **Small** standalone distribution, not dependent on a JDK/JRE* **Instant Startup*** **Lower memory** footprint
 
-In the next exercise, we will be using GraalVM Native Image to compile Java Bytecode into a native binary executable file.
+
+In the previous exercise, we discovered that GraalVM Enterprise can boost Java program performance without changing any code.  In the next exercise, we will be using GraalVM Native Image to compile Java Bytecode into a native binary executable file.
 
 ### Graal AOT
 
@@ -423,7 +424,7 @@ TOTAL time: 2957
 The new benchmark (as a result of PGO) shows a better throughput of **2957 milliseconds** compared to **4686 miliseconds** (with the non-PGO version) which is **37% better throughput**.
 
 
-##### Generating PGO file via `native-image --pgo-instrument`
+#### Generating PGO file via `native-image --pgo-instrument`
 
 Another way of creating a PGO file is using `native-image --pgo-instrument`.
 
@@ -481,9 +482,165 @@ Iteration 20 finished in 36 milliseconds with checksum e6e0b70aee921601
 TOTAL time: 633
 ```
 
-The latest benchmark shows even better throughput of **633 milliseconds** compared to the initial **4686 miliseconds** which results in more than **86% better throughput**.
+The latest benchmark shows even better throughput of **633 milliseconds** compared to the initial **4686 milliseconds** which results in more than **86% better throughput**.
 
-We have demonstrated how to optimize an AOT binary executable file using PGO.
+Great, we have just demonstrated how to optimize an AOT binary executable file using PGO.
+
+### The Closed World AssumptionGraalVM native image build uses the closed world assumption, meaning that all the bytecode in the application needs to be known (observed and analyzed) at the build time.The analysis process is responsible for determining which classes, methods and fields need to be included in the executable. The analysis is static, it's not aware of any dynamic class loading, reflection etc., so it needs some configuration to correctly include the parts of the program that use dynamic features of the language.What information can we pass to the native image build?* _Reflection_* _Resources_* _JNI_* _Dynamic Proxies_Classes and methods accessed through the Reflection API need to be configured. How to we configure all of this information?  The most convenient approach is with the configuration javaagent.![User Input](../images/userinput.png)
+
+Let's try an example.  In your favorite IDE, create a new Java program called `HelloReflection.java`:```javapublic class HelloReflection {
+  
+  public static void foo() {
+    System.out.println("Running foo");
+  }
+ 
+  public static void bar() {
+    System.out.println("Running bar");
+  }
+    
+  public static void main(String[] args) {
+    for (String arg : args) {
+      try {
+        HelloReflection.class.getMethod(arg).invoke(null);
+      } catch (ReflectiveOperationException ex) {
+        System.out.println("Exception running " + arg + ": " + ex.getClass().getSimpleName());
+      }
+    }
+  }
+}```First, let's build it:![User Input](../images/userinput.png)```bash$ javac HelloReflection.java```The main method invokes all methods whose names are passed as command line arguments. Only two methods are provided for simplicity: `foo` and `bar`. Providing any other name on the command line leads to an exception.
+
+![User Input](../images/userinput.png)
+```bash
+$ javac HelloReflection
+```
+
+Run the example:
+
+![User Input](../images/userinput.png)
+```bash
+$ java HelloReflection foo xyz
+```
+
+Produces the output:
+
+```
+Running foo
+Exception running xyz: NoSuchMethodException
+```
+
+As expected, the method `foo` was found via reflection, but the non-existent method `xyz` was not found.
+
+As mentioned before, native image generation requires a configuration file, otherwise the method `foo` would not be accessible via reflection. To avoid confusion, the native image generator detects that reflection is used without a reflection configuration file.
+
+Next, let's try to create a native image:
+
+![User Input](../images/userinput.png)
+```bash
+$ native-image HelloReflection
+```
+
+Executing the above command does not actually produce a native image of the application, but only a so-called “fallback image”:
+
+```bash
+Warning: Reflection method java.lang.Class.getMethod invoked at HelloReflection.main(HelloReflection.java:14)
+Warning: Abort stand-alone image build due to reflection use without configuration.Warning: Use -H:+ReportExceptionStackTraces to print stacktrace of underlying exception...
+Warning: Image 'helloreflection' is a fallback-image that requires a JDK for execution (use --no-fallback to suppress fallback image generation).
+```
+
+The fallback image is just a launcher for the Java HotSpot VM. While this is probably not what the developer really wanted to produce, it is necessary to ensure that native image generation does not produce native images that fail immediately at run time, but perform as expected.
+
+![User Input](../images/userinput.png)
+```bash
+$ ./helloreflection foo xyz
+Running foo
+Exception running xyz: NoSuchMethodException
+```
+
+We can explicitly disable the fallback image generation using the option `--no-fallback`:
+
+![User Input](../images/userinput.png)
+```bash
+$ native-image --no-fallback HelloReflection
+```
+
+This produces a native image that can run without the Java HotSpot VM, but has no methods accessible via reflection:
+
+![User Input](../images/userinput.png)
+```bash
+$ ./helloreflection foo xyz
+Exception running foo: NoSuchMethodException
+Exception running xyz: NoSuchMethodException
+```
+### GraalVM Tracing Agent to the Rescue
+Writing a complete reflection configuration file from scratch is possible, but tedious. Therefore, we provide an agent for the Java HotSpot VM that produces a reflection configuration file by tracing all reflective lookup operations on the Java HotSpot VM. Operations that are traced are, for example, `Class.forName`, `Class.getMethod`, and `Class.getField`.
+
+![User Input](../images/userinput.png)
+```bash
+$ mkdir -p META-INF/native-image
+$ java -agentlib:native-image-agent=config-output-dir=META-INF/native-image HelloReflection foo
+```
+
+This command creates a directory META-INF/native-image with the file reflection-config.json. Several other files are created in that directory too, which we discuss later in this article. The file reflection-config.json makes the method HelloReflection.foo accessible via reflection:
+
+```
+[
+   {
+         "name":"HelloReflection",
+         "methods":[{ "name":"foo", "parameterTypes":[] }]
+   }
+]
+```
+
+The native image generator automatically picks up configuration files in META-INF/native-image or subdirectories, the same manner that `native-image.properties` files are automatically picked up.
+
+![User Input](../images/userinput.png)
+```bash
+$ native-image HelloReflection
+```
+
+This produces a native image that allows reflective lookup of the method `foo`. Note that it is no longer necessary to provide the option `--no-fallback`: the reflection configuration file stated the intention of the developer that no fallback image should be generated despite of the fact that the application uses reflection. The native image runs as expected:
+
+![User Input](../images/userinput.png)
+```bash
+$ ./helloreflection foo xyz
+Running foo
+Exception running xyz: NoSuchMethodException
+```
+The tracing agent and the native image tool cannot automatically check that the traced reflection usage or the provided reflection configuration files are complete. In our example command lines, we have not provided the name of the method bar so far. This method is found when running our example on the Java HotSpot VM:
+
+![User Input](../images/userinput.png)
+```bash
+$ java HelloReflection bar
+Running bar
+```
+
+But it is not found when running the native image as generated in the previous section:
+
+![User Input](../images/userinput.png)
+```bash
+$ ./helloreflection bar
+Exception running bar: NoSuchMethodException
+```
+
+We either have to manually edit the file `reflection-config.json` and add the method `bar`, or we can run the tracing agent to **augment** the configuration file using `config-merge-dir`:
+
+![User Input](../images/userinput.png)
+```bash
+$ java -agentlib:native-image-agent=config-merge-dir=META-INF/native-image HelloReflection bar
+```
+
+Note the different option `config-merge-dir` that instructs the agent to extend the existing configuration files instead of overwriting them with new configuration files. After re-building the native image, the method `bar` is now accessible too:
+
+![User Input](../images/userinput.png)
+```bash
+$ native-image HelloReflection
+$ ./helloreflection foo bar xyz
+Running foo
+Running bar
+Exception running xyz: NoSuchMethodException
+```
+
+For real-world applications, we suggest using both the tracing agent as well as manual inspection and modification of the configuration files. Running on the Java HotSpot VM on all test suites provided by an application can produce a fairly complete configuration file. The completeness depends on the code coverage of the test suite: An ideal test suite with 100% application code coverage produces a configuration file that is guaranteed to be complete. However, in reality test suites never test all paths through an application. Therefore, manual inspection and modification of the configuration files is likely to be required for real-world applications.This is a very convenient & easy way to configure reflection and resources used by the application for building native images.To reiterate, these best practices should be followed when using the tracing agent:* Use your test suites. You need to exercise as many paths in your code as you can* You may need to review & edit your config files
 
 The `native-image` tool has some
 [restrictions](https://github.com/oracle/graal/blob/master/substratevm/LIMITATIONS.md)

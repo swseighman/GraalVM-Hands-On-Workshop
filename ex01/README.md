@@ -16,7 +16,7 @@ You can simply clone the source code by using this command:
 $ git clone https://github.com/marthenlt/native-image-workshop.git
 ```
 
-Once you've cloned the above repo you can then change directory to `native-image-workshop` and unzip `large.zip`file. See the following commands:
+Once you've cloned the repo, change directory to `native-image-workshop` and unzip `large.zip`file. See the following commands:
 
 ![user input](../images/userinput.png)
 
@@ -28,24 +28,25 @@ $ unzip large.zip
 Executing a `ls -al` of your working directory should output something similar to this:
 
 ```
-drwxr-xr-x  13 sseighma  staff        416 Sep  2 01:50 .
-drwxr-xr-x   9 sseighma  staff        288 Aug 28 13:04 ..
-drwxr-xr-x  16 sseighma  staff        512 Sep  2 01:50 .git
--rw-r--r--   1 sseighma  staff         33 Aug 11 12:30 .gitignore
--rw-r--r--   1 sseighma  staff        545 Aug 11 12:30 README.md
--rw-r--r--   1 sseighma  staff       2341 Aug 25 23:06 Streams.java
--rw-r--r--   1 sseighma  staff       1127 Aug 11 12:30 TopTen.java
--rw-r--r--   1 sseighma  staff         81 Aug 11 12:30 c2.sh
--rw-r--r--   1 sseighma  staff         59 Aug 11 12:30 graal.sh
--rwxr-xr-x   1 sseighma  staff  151397500 Sep 20  2019 large.txt
--rw-r--r--   1 sseighma  staff   40230188 Aug 11 12:30 large.zip
--rw-r--r--   1 sseighma  staff       1024 Aug 11 12:30 small.txt
--rw-r--r--   1 sseighma  staff         55 Aug 11 12:30 timer.bat
+total 394112
+drwxr-xr-x  15 sseighma  staff        480 Nov 22 11:56 .
+drwxr-xr-x  15 sseighma  staff        480 Jan 20 11:33 ..
+drwxr-xr-x  12 sseighma  staff        384 Nov 22 11:53 .git
+-rw-r--r--   1 sseighma  staff         33 Nov 22 11:53 .gitignore
+-rw-r--r--   1 sseighma  staff        545 Nov 22 11:53 README.md
+-rw-r--r--   1 sseighma  staff       2341 Nov 22 11:53 Streams.java
+-rw-r--r--   1 sseighma  staff       1127 Nov 22 11:53 TopTen.java
+-rw-r--r--   1 sseighma  staff         81 Nov 22 11:53 c2.sh
+-rw-r--r--   1 sseighma  staff         59 Nov 22 11:53 graal.sh
+-rwxr-xr-x   1 sseighma  staff  151397500 Sep 19  2019 large.txt
+-rw-r--r--   1 sseighma  staff   40230188 Nov 22 11:53 large.zip
+-rw-r--r--   1 sseighma  staff       1024 Nov 22 11:53 small.txt
+-rw-r--r--   1 sseighma  staff         55 Nov 22 11:53 timer.bat
 ```
 
-We'll use the `TopTen.java` example program, which displays the top ten words in `large.txt` (file size is round 150 MB).
+We'll use the `TopTen.java` example program, which displays the top ten words in `large.txt` (file size is approximately 151 MB).
 
-It uses Stream Java API to traverse, sort and count all the words (total, there are 22,377,500 words).
+It uses the Stream Java API to traverse, sort and count all the words (there are 22,377,500 words).
 
 Below is the contents of the `TopTen.java` program:
 
@@ -88,8 +89,7 @@ public class TopTen {
 ### Graal JIT - _Compile The TopTen.java Program_
 
 GraalVM includes a `javac` compiler, but it isn't any different from the
-standard compiler for the purposes of this demo, so you could use your system `javac`
-instead.
+standard compiler for the purposes of this demo, so optionally you could use your system `javac` instead.
 
 To compile, use the following command:
 
@@ -188,9 +188,8 @@ java -XX:-UseJVMCICompiler TopTen large.txt  15.91s user 0.30s system 106% cpu 1
 
 These results show GraalVM uses approximately two-thirds of the wall-clock (`real`) time to run the application using a standard HotSpot compiler. In an atmosphere where single-digit percentage increases in performance is considered significant, this is impressive!
 
-You'll still see better results if you use GraalVM Community
-Edition, but it won't be quite as impressive as the Enterprise Edition.
+You'll see similar results if you use GraalVM Community Edition, but they won't be quite as impressive as the Enterprise Edition results.
 
-As you can see, by simply replacing the underlying JIT compiler, you'll realize improved performance for your existing Java applications.
+As you can see, by simply replacing the underlying JIT compiler, you'll realize improved performance from your existing Java applications.
 
 ---<a href="../ex02/">    <img src="../images/noun_Next_511450_100.png"/></a>

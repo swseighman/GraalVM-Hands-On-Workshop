@@ -1,11 +1,15 @@
 # GraalVM Hands on Workshop
 
+
 ## Overview
+
+<img src="https://www.graalvm.org/resources/img/home/logo-coloured.svg" width=40% height=40%>
 
 The workshop is divided into a number of exercises (each largely self-contained) that cover one aspect of GraalVM. Most of these exercises are applicable to both the GraalVM Community Edition & Enterprise Edition, but some focus on functionality only offered in the Enterprise Edition.
 
+
 ## Credits
-This workshop is based on a collection of content, examples and exercises from the likes of Kris Foster, Marthen Luther, Oleg Šelajev, Chris Seaton and others.
+This workshop is based on a collection of content and exercises from the likes of Kris Foster, Marthen Luther, Oleg Šelajev, and Chris Seaton.
 
 ## Requirements and Installation
 

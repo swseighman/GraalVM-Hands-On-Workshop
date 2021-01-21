@@ -41,7 +41,7 @@ $ cd target
 $ ./commandlinerunner
 ```
 
-Notice the startup times comparing the traditional Spring fat-JAR vs GraalVM Native Image.
+Notice the startup times comparing the traditional Spring Fat-JAR vs GraalVM Native Image.
 
 # Conclusions
 
