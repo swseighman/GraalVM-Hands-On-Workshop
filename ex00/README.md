@@ -25,4 +25,6 @@ MacOS
 
 >As mentioned, this workshop does not include Windows examples but if your're curious, feel free to review [this document](https://swseighman.github.io/Native-Image-Windows/) on installing GraalVM and the native image module on Windows 10.
 
-Congratulations! You have successfully installed GraalVM Enterprise Edition along with the Native Image, LLVM toolchain, and R components.  Now we're ready to begin the exercises.
+**Congratulations!** You have successfully installed GraalVM Enterprise Edition along with the Native Image, LLVM toolchain, and R components.  Now we're ready to begin the exercises.
+
+---<a href="../ex01/">    <img src="../images/noun_Next_511450_100.png"/></a>

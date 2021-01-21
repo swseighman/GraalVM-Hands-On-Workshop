@@ -106,3 +106,5 @@ languages and use modules from those languages together. We think of this as a
 kind of commoditisation of languages and modules - you can use whichever
 language you think is best for your problem at hand, and whichever library you
 want, no matter which language it came from.
+
+---<a href="../ex04/">    <img src="../images/noun_Next_511450_100.png"/></a>

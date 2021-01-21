@@ -495,3 +495,5 @@ you can reduce the work required each time an application loads.
 Of course, you can use GraalVM native image as a means to distribute and run
 your existing Java programs with low-footprint and fast-startup features. It also frees you from configuration issues such as locating the right jar files at runtime,
 and allows you to create smaller container images.
+
+---<a href="../ex03/">    <img src="../images/noun_Next_511450_100.png"/></a>

@@ -97,7 +97,7 @@ To compile, use the following command:
 
 `$ javac TopTen.java`
 
-If we run the `java` command included in GraalVM, we'll be automatically using
+If we run the `java` command included in GraalVM, we'll automatically be using
 the GraalVM JIT compiler (no extra configuration is required). Rather than set up a complicated micro-benchmark, we'll use the `time` command to display the real, wall-clock elapsed time to run the entire program from start to finish.
 
 Use the command below to measure the time GraalVM Enterprise takes to run `TopTen.java`:
@@ -192,3 +192,5 @@ You'll still see better results if you use GraalVM Community
 Edition, but it won't be quite as impressive as the Enterprise Edition.
 
 As you can see, by simply replacing the underlying JIT compiler, you'll realize improved performance for your existing Java applications.
+
+---<a href="../ex02/">    <img src="../images/noun_Next_511450_100.png"/></a>
