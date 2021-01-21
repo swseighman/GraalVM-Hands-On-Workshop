@@ -2,7 +2,7 @@
 
 Creating your first Micronaut GraalVM application
 
-<img src="https://micronaut.io/images/micronaut_mini_copy_tm.svg" width=50% height=50% />
+![](../images/micronaut_mini_copy_tm-50.png)
 
 Next, we'll learn how to create a Hello World Micronaut GraalVM application. To get started, clone the git repository:
 
