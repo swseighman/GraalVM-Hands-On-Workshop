@@ -1,45 +1,29 @@
 ## Exercise 4: Microservices
 
-Creating your first Micronaut GraalVM application
-
 ![](../images/micronaut_mini_copy_tm-50.png)
 
-Next, we'll learn how to create a Hello World Micronaut GraalVM application. To get started, clone the git repository:
 
+In this exercise, we'll learn how to create a Hello World Micronaut GraalVM application. To get started, clone the git repository:
 ![user input](../images/userinput.png)
+```bash$ git clone https://github.com/swseighman/micronaut-graalvm-helloworld.git```Change directory to `micronaut-graalvm-helloworld`:![user input](../images/userinput.png)
+```bash$ cd micronaut-graalvm-helloworld```![user input](../images/userinput.png)
+```bash$ ./mvnw package```You can run either the JAR or native-image version:**JAR:**![user input](../images/userinput.png)
+```bash$ java -jar target/micronaut-graalvm-helloworld-0.1.jar16:11:07.159 [main] INFO  io.micronaut.runtime.Micronaut - Startup completed in 630ms. Server Running: http://:8080```In a separate terminal, send a request to the service:![user input](../images/userinput.png)
+```bash$ curl http://localhost:8080/randomplay{"name":"Java Rules!"}```**native-image:**![user input](../images/userinput.png)
+```bash$ target/micronaut-graalvm-helloworld16:13:34.873 [main] INFO  io.micronaut.runtime.Micronaut - Startup completed in 46ms. Server Running: http://:8080```In a separate terminal, send a request to the service:![user input](../images/userinput.png)
+```bash$ curl http://localhost:8080/randomplay{"name":"GraalVM Rocks!"}```### Deploying a JAR inside a containerWith this approach you only need the fat jar.Build a container image, make certain the docker daemon service is running (or use `podman`).![user input](../images/userinput.png)
+```bash$ ./docker-build-jvm.sh```Start the container:![user input](../images/userinput.png)
+```bash$ docker run -p 8080:8080 helloworld-graal-jvm19:58:42.934 [main] INFO  io.micronaut.runtime.Micronaut - Startup completed in 642ms. Server Running: http://9c1ab24b58df:8080```![user input](../images/userinput.png)
+```bash$ curl http://localhost:8080/randomplay{"name":"GraalVM Rocks!"}```Quit the docker container by issuing a `CTRL-C` in the original terminal window.
+### Deploying a native image inside a containerWith this approach you only need to build the fat jar and then use Docker/Podman to build the native image.Then build a container image, make certain the docker daemon service is running (or use `podman`).![user input](../images/userinput.png)
+```bash$ ./docker-build.sh```Start the container:![user input](../images/userinput.png)
+```bash$ docker run -p 8080:8080 helloworld-graal/app/micronaut-graalvm-helloworld: /usr/lib/libstdc++.so.6: no version information available (required by /app/micronaut-graalvm-helloworld)15:34:41.145 [main] INFO  io.micronaut.runtime.Micronaut - Startup completed in 56ms. Server Running: http://aa22eb808a30:8080```![user input](../images/userinput.png)
+```bash$ curl http://localhost:8080/randomplay{"name":"Java Rocks!"}```![user input](../images/userinput.png)
+```bash$ docker imagesREPOSITORY                               TAG                       IMAGE ID       CREATED             SIZEhelloworld-graal                         latest                    3779528da123   12 minutes ago      83.1MBhelloworld-graal-jvm                     latest                    ae6f8aea4300   45 minutes ago      300MB```
 
-```bash
-$ git clone https://github.com/micronaut-guides/micronaut-creating-first-graal-app.git
-```
+Finally, quit the docker container by issuing a `CTRL-C` in the original terminal window.
 
-Change directory to the `complete` subdirectory within the cloned repo:
-
-```bash
-$ cd micronaut-creating-first-graal-app/complete
-```
-
-### Exercise 4.1: Deploying a native image inside a container
-
-With this approach you only need to build the fat jar and then use Docker/Podman to build the native image.
-
-Build the Graal fat jar:
-
-![user input](../images/userinput.png)
-
-```bash
-$ ./gradlew assemble`
-```
-
-Modify the `Dockerfile` content, find `RUN native-image -cp build/libs/complete-*-all.jar` and change it to `RUN native-image -H:Class=example.micronaut.Application -cp build/libs/complete-*-all.jar`
-
-Then build a container image, make certain the docker daemon service is running (or use `podman`).
-
-![user input](../images/userinput.png)
-
-```bash
-$ sudo ./docker-build.sh
-```
-
+NOTE:
 >>
 >>If you are using Fedora 31 and above, you may have encountered an error when excuting the `docker-build.sh` script. Fedora 31+ is using CGroup v2 by default which is not compatible with Docker at this time.
 >>On my Fedora 33 system, the script failed with message _**"OCI runtime create failed: this version of runc doesn't work on cgroups v2: unknown"**_
@@ -77,49 +61,11 @@ Here's the error output:
 >>
 >> You should be able to build a container image now.
 
-The previous command will create the image `micronaut-graal-app:latest`.
-
-Execute the native image container:
-
-![user input](../images/userinput.png)
-
-```bash
-$ sudo docker run -p 3000:8080 --name=micronaut micronaut-graal-app
-```
-
-```
-10:29:46.845 [main] INFO  io.micronaut.runtime.Micronaut - Startup completed in 12ms. Server Running: http://localhost:8080
-```
-
-We can see the application starts in only **12ms** (actual time will vary).
+The previous command will create the image `micronaut-graal:latest`.
 
 
 ### A Note on Building on OSXIf you use a Mac, you will need to build your native images inside a Linux container if you want to deploy them inside Docker containers. If you stop and think about it for a second, that makes perfect sense, right?  You build on a Mac, you get a Mac executable.You will, from time to time, forget this and then you will see the following error when you deploy your app into a docker container:```textstandard_init_linux.go:211: exec user process caused "exec format error"```
 
-### Exercise 4.2: Sending a request to the application
-
-From another terminal, you can run a few cURL requests to test the application:
-
-![user input](../images/userinput.png)
-
-```bash
-$ time curl localhost:3000/conferences/random
-```
-
-```
-{"name":"Greach"}
-real    0m0.016s
-user    0m0.005s
-sys     0m0.004s
-```
-
-Finally, kill the docker container:
-
-![user input](../images/userinput.png)
-
-```bash
-$ sudo docker kill micronaut
-```
 
 ![user input](../images/micronaut-startup.png)
 

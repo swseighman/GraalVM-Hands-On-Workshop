@@ -1,10 +1,13 @@
 ## Exercise 1: High-Performance JIT Compiler for Java
 
-GraalVM supports two runtime modes, the _**JIT compiler**_, and _**AOT (Ahead-of-Time) compiler**_.
 
-We'll explore both in the following exercises, let's begin with the *JIT compiler and examine how it boosts application performance*.
+The GraalVM compiler is a dynamic just-in-time (JIT) compiler, written in Java, that transforms bytecode into machine code. The GraalVM compiler integrates with the Java HotSpot VM, which supports a compatible version of the JVM Compiler Interface (JVMCI). JVMCI is a privileged, low-level interface to the JVM, enabling a compiler written in Java to be used by the JVM as a dynamic compiler (see JEP 243)
 
-### Graal JIT
+It can read metadata from the VM, such as method bytecode, and install machine code into the VM . GraalVM includes a version of the HotSpot JVM that supports JVMCI.
+
+GraalVM supports two operating modes, the _**JIT compiler**_, and _**AOT (Ahead-of-Time) compiler**_.  We'll explore both in the following exercises, let's begin with the JIT compiler and examine how it boosts application performance.
+
+### GraalVM JIT
 
 Source code for this exercise can be found [here](https://github.com/marthenlt/native-image-workshop).
 
@@ -86,7 +89,7 @@ public class TopTen {
 }
 ```
 
-### Graal JIT - _Compile The TopTen.java Program_
+### GraalVM JIT - Compile The TopTen.java Program
 
 GraalVM includes a `javac` compiler, but it isn't any different from the
 standard compiler for the purposes of this demo, so optionally you could use your system `javac` instead.
