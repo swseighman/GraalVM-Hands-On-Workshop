@@ -61,10 +61,8 @@ Here's the error output:
 >>
 >> You should be able to build a container image now.
 
-The previous command will create the image `micronaut-graal:latest`.
 
-
-### A Note on Building on OSXIf you use a Mac, you will need to build your native images inside a Linux container if you want to deploy them inside Docker containers. If you stop and think about it for a second, that makes perfect sense, right?  You build on a Mac, you get a Mac executable.You will, from time to time, forget this and then you will see the following error when you deploy your app into a docker container:```textstandard_init_linux.go:211: exec user process caused "exec format error"```
+### A Note on Building on OSXIf you use a Mac, you will need to build your native images inside a **Linux container** if you want to deploy it inside a Docker container. If you stop to think about it, makes perfect sense, right?  You build on a Mac, you get a Mac executable.You will, from time to time, forget this and then you will see the following error when you deploy your app into a docker container:```textstandard_init_linux.go:211: exec user process caused "exec format error"```
 
 
 ![user input](../images/micronaut-startup.png)
