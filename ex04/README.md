@@ -15,12 +15,22 @@ In this exercise, we'll learn how to create a Hello World Micronaut GraalVM appl
 ```bash$ ./docker-build-jvm.sh```Start the container:![user input](../images/userinput.png)
 ```bash$ docker run -p 8080:8080 helloworld-graal-jvm19:58:42.934 [main] INFO  io.micronaut.runtime.Micronaut - Startup completed in 642ms. Server Running: http://9c1ab24b58df:8080```Notice the container started in **642ms**.  Bet we can do better with the native image!
 ![user input](../images/userinput.png)
-```bash$ curl http://localhost:8080/randomplay{"name":"GraalVM Rocks!"}```Quit the docker container by issuing a `CTRL-C` in the original terminal window.
+```bash$ curl http://localhost:8080/randomplay{"name":"GraalVM Rocks!"}```
+Check the container CPU/memory usage:
+
+![user input](../images/userinput.png)
+```bash$ docker ps (note the container ID)
+$ docker stats <container-ID>```
+Quit the docker container by issuing a `CTRL-C` in the original terminal window.
 ### Deploying a native image inside a containerWith this approach you only need to build the fat jar and then use Docker/Podman to build the native image.Then build a container image, make certain the docker daemon service is running (or use `podman`).![user input](../images/userinput.png)
 ```bash$ ./docker-build.sh```Start the container:![user input](../images/userinput.png)
-```bash$ docker run -p 8080:8080 helloworld-graal/app/micronaut-graalvm-helloworld: /usr/lib/libstdc++.so.6: no version information available (required by /app/micronaut-graalvm-helloworld)15:34:41.145 [main] INFO  io.micronaut.runtime.Micronaut - Startup completed in 56ms. Server Running: http://aa22eb808a30:8080```Notice the container started in **56ms** compared to **642ms** with the JAR version.
+```bash$ docker run -p 8080:8080 helloworld-graal/app/micronaut-graalvm-helloworld: /usr/lib/libstdc++.so.6: no version information available (required by /app/micronaut-graalvm-helloworld)15:34:41.145 [main] INFO  io.micronaut.runtime.Micronaut - Startup completed in 56ms. Server Running: http://aa22eb808a30:8080```Notice the container started in **56ms** compared to **642ms** with the JAR version.![user input](../images/userinput.png)
+```bash$ curl http://localhost:8080/randomplay{"name":"Java Rocks!"}```Once again, check the container CPU/memory usage:
+
+![user input](../images/userinput.png)
+```bash$ docker ps (note the container ID)
+$ docker stats <container-ID>```Compare the container image size:
 ![user input](../images/userinput.png)
-```bash$ curl http://localhost:8080/randomplay{"name":"Java Rocks!"}```![user input](../images/userinput.png)
 ```bash$ docker imagesREPOSITORY                               TAG                       IMAGE ID       CREATED             SIZEhelloworld-graal                         latest                    3779528da123   12 minutes ago      83.1MBhelloworld-graal-jvm                     latest                    ae6f8aea4300   45 minutes ago      300MB```
 
 Finally, quit the docker container by issuing a `CTRL-C` in the original terminal window.
@@ -62,6 +72,20 @@ Here's the error output:
 >>```
 >>
 >> You should be able to build a container image now.
+>> 
+>> (Optional): If you're using `podman`, these commands worked too:
+>> 
+>> ![user input](../images/userinput.png)
+>>
+>> ```bash
+>> $ podman --runtime /usr/bin/crun run --rm --pids-limit 1 fedora echo it works
+>> $ sudo mount -t cgroup2 none /sys/fs/cgroup
+>> $ sudo touch /etc/{subgid,subuid}
+>> $ sudo usermod --add-subuids 100000-165535 --add-subgids 100000-165535 <your-username>
+>> $ grep {USER} /etc/subuid /etc/subgid
+>> 
+```
+
 
 
 ### A Note on Building on OSXIf you use a Mac, you will need to build your native images inside a **Linux container** if you want to deploy it inside a Docker container. If you stop to think about it, makes perfect sense, right?  You build on a Mac, you get a Mac executable.You will, from time to time, forget this and then you will see the following error when you deploy your app into a docker container:```textstandard_init_linux.go:211: exec user process caused "exec format error"```
