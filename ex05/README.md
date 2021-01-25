@@ -1,8 +1,8 @@
-## Exercise 5: SpringBoot and GraalVM Native Image
+## Exercise 5: Spring Boot and GraalVM Native Image
 
 ![](../images/spring.png)
 
-This exercise will focus on GraalVM and Spring Boot.
+This exercise will focus on GraalVM and Spring Boot and was tested with Spring Boot 2.4.2.
 
 ### Exercise 5.1: Clone the sample SpringBoot Application
 
@@ -108,6 +108,4 @@ SEVERE: ERROR log message
 
 Notice the startup times comparing the traditional Spring fat-jar **(0.674 seconds**) vs GraalVM Native Image (**0.103 seconds**).
 
-# Conclusions
-
-Today, we have seen GraalVM in action, Microservices with GraalVM and also how a SpringBoot application works with GraalVM.
+---<a href="../review/">    <img src="../images/noun_Next_511450_100.png"/></a>

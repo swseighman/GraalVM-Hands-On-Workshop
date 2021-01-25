@@ -3,15 +3,34 @@
 ![](../images/micronaut_mini_copy_tm-50.png)
 
 
-In this exercise, we'll learn how to create a Hello World Micronaut GraalVM application. To get started, clone the git repository:
+In this exercise, we'll learn how to create a Hello World Micronaut GraalVM application.  To get started, clone the git repository:
 ![user input](../images/userinput.png)
 ```bash$ git clone https://github.com/swseighman/micronaut-graalvm-helloworld.git```Change directory to `micronaut-graalvm-helloworld`:![user input](../images/userinput.png)
-```bash$ cd micronaut-graalvm-helloworld```![user input](../images/userinput.png)
+```bash$ cd micronaut-graalvm-helloworld```
+This exercise was tested with Micronaut 2.2.x and Micronaut 2.3.0 (latest).  Simply edit the `pom.xml` file to choose a particular version.
+![user input](../images/userinput.png)
 ```bash$ ./mvnw package```You can run either the JAR or native-image version:**JAR:**![user input](../images/userinput.png)
-```bash$ java -jar target/micronaut-graalvm-helloworld-0.1.jar16:11:07.159 [main] INFO  io.micronaut.runtime.Micronaut - Startup completed in 630ms. Server Running: http://:8080```In a separate terminal, send a request to the service:![user input](../images/userinput.png)
+```bash$ java -jar target/micronaut-graalvm-helloworld-0.1.jar
+ __  __ _                                  _
+|  \/  (_) ___ _ __ ___  _ __   __ _ _   _| |_
+| |\/| | |/ __| '__/ _ \| '_ \ / _` | | | | __|
+| |  | | | (__| | | (_) | | | | (_| | |_| | |_
+|_|  |_|_|\___|_|  \___/|_| |_|\__,_|\__,_|\__|
+  Micronaut (v2.3.0)
+
+22:28:04.190 [main] INFO  io.micronaut.runtime.Micronaut - Startup completed in 832ms. Server Running: http://localhost:8080```In a separate terminal, send a request to the service:![user input](../images/userinput.png)
 ```bash$ curl http://localhost:8080/randomplay{"name":"Java Rules!"}```**native-image:**![user input](../images/userinput.png)
-```bash$ target/micronaut-graalvm-helloworld16:13:34.873 [main] INFO  io.micronaut.runtime.Micronaut - Startup completed in 46ms. Server Running: http://:8080```In a separate terminal, send a request to the service:![user input](../images/userinput.png)
-```bash$ curl http://localhost:8080/randomplay{"name":"GraalVM Rocks!"}```### Deploying a JAR inside a containerWith this approach you only need the fat jar.Build a container image, make certain the docker daemon service is running (or use `podman`).![user input](../images/userinput.png)
+```bash$ target/micronaut-graalvm-helloworld
+ __  __ _                                  _
+|  \/  (_) ___ _ __ ___  _ __   __ _ _   _| |_
+| |\/| | |/ __| '__/ _ \| '_ \ / _` | | | | __|
+| |  | | | (__| | | (_) | | | | (_| | |_| | |_
+|_|  |_|_|\___|_|  \___/|_| |_|\__,_|\__,_|\__|
+  Micronaut (v2.3.0)
+
+22:27:08.314 [main] INFO  io.micronaut.runtime.Micronaut - Startup completed in 13ms. Server Running: http://localhost:8080```In a separate terminal, send a request to the service:![user input](../images/userinput.png)
+```bash$ curl http://localhost:8080/randomplay{"name":"GraalVM Rocks!"}```Note the startup times for the JAR (**832ms**) versus the native image (**13ms**) applications.
+### Deploying a JAR inside a containerWith this approach you only need the fat jar.Build a container image, make certain the docker daemon service is running (or use `podman`).![user input](../images/userinput.png)
 ```bash$ ./docker-build-jvm.sh```Start the container:![user input](../images/userinput.png)
 ```bash$ docker run -p 8080:8080 helloworld-graal-jvm19:58:42.934 [main] INFO  io.micronaut.runtime.Micronaut - Startup completed in 642ms. Server Running: http://9c1ab24b58df:8080```Notice the container started in **642ms**.  Bet we can do better with the native image!
 ![user input](../images/userinput.png)
