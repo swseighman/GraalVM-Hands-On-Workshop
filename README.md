@@ -1,4 +1,4 @@
-# GraalVM Hands on Workshop
+# GraalVM Hands On Workshop
 
 
 ## Overview

@@ -1,4 +1,4 @@
-# GraalVM Hands on Workshop
+# GraalVM Hands On Workshop Summary
 
 ![](../images/logo-coloured-50.png)
 
