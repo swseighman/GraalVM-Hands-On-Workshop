@@ -34,7 +34,7 @@ Throughout the workshop, when you see a red computer icon ![user input](images/u
 * [Exercise 3: Polyglot - Combine JavaScript, Java, and R](./ex03/)
 * [Exercise 4: Microservices](./ex04/)
 * [Exercise 5: SpringBoot  and GraalVM Native Image](./ex05/)
-* [Workshop Summary and Resources](../review/)
+* [Workshop Summary and Resources](./review/)
 
 
 **Let's get started!**

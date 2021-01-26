@@ -637,12 +637,7 @@ Exception running xyz: NoSuchMethodException
 
 For real-world applications, we suggest using both the tracing agent as well as manual inspection and modification of the configuration files. Running on the Java HotSpot VM on all test suites provided by an application can produce a fairly complete configuration file. The completeness depends on the code coverage of the test suite: An ideal test suite with 100% application code coverage produces a configuration file that is guaranteed to be complete. However, in reality test suites never test all paths through an application. Therefore, manual inspection and modification of the configuration files is likely to be required for real-world applications.This is a very convenient & easy way to configure reflection and resources used by the application for building native images.To reiterate, these best practices should be followed when using the tracing agent:* Use your test suites. You need to exercise as many paths in your code as you can* You may need to review & edit your config files
 
-The `native-image` tool has some
-[restrictions](https://github.com/oracle/graal/blob/master/substratevm/LIMITATIONS.md)
-such as all classes having to be available during compilation, and some
-limitations around reflection. It has some additional advantages over basic
-compilation as well in that static initializers are run during compilation, so
-you can reduce the work required each time an application loads.
+The `native-image` tool has some restrictions such as all classes having to be available during compilation, and some limitations around reflection. It has some additional advantages over basic compilation as well in that static initializers are run during compilation, so you can reduce the work required each time an application loads.
 
 Of course, you can use GraalVM native image as a means to distribute and run
 your existing Java programs with low-footprint and fast-startup features. It also frees you from configuration issues such as locating the right jar files at runtime,

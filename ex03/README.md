@@ -47,7 +47,9 @@ added 6 packages from 6 contributors and audited 7 packages in 6.931s
 ```
 
 We can write a simple program using this module to convert an RGB HTML color to
-HSL (Hue, Saturation and Lightness):
+HSL (Hue, Saturation and Lightness).  Create a file called `color.js` and add the following code:
+
+![user input](../images/userinput.png)
 
 ```javascript
 var Color = require('color');
@@ -125,9 +127,11 @@ Now let's run the program:
 
 Open http://localhost:3000/ in your browser to see the result.
 
+*(NOTE: If your're using WSL2, you'll need to specify the IP address of your environment)*
+
 ![polyglot.js](../images/polyglot.png)
 
-That's another option we have avilable with GraalVM, the ability to run programs written in multiple languages and use modules from those languages together. We think of this as a
+That's another option we have available with GraalVM, the ability to run programs written in multiple languages and use modules from those languages together. We think of this as a
 kind of commoditization of languages and modules - you can use whichever language you think is best for your use case and whichever library you want, no matter which language.
 
 
