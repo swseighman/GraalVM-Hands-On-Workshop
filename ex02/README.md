@@ -248,7 +248,7 @@ class Person {
 }
 ```
 
-Compile it using below command:
+Compile it using the command below:
 
 ![user input](../images/userinput.png)
 

@@ -9,7 +9,7 @@ In this exercise, we'll learn how to create a Hello World Micronaut GraalVM appl
 ```bash$ cd micronaut-graalvm-helloworld```
 This exercise was tested with Micronaut 2.2.x and Micronaut 2.3.0 (latest).  Simply edit the `pom.xml` file to choose a particular version.
 ![user input](../images/userinput.png)
-```bash$ ./mvnw package```You can run either the JAR or native-image version:**JAR:**![user input](../images/userinput.png)
+```bash$ ./mvnw package```You can now run the `jar` version from the `target` directory:![user input](../images/userinput.png)
 ```bash$ java -jar target/micronaut-graalvm-helloworld-0.1.jar
  __  __ _                                  _
 |  \/  (_) ___ _ __ ___  _ __   __ _ _   _| |_
@@ -19,7 +19,9 @@ In this exercise, we'll learn how to create a Hello World Micronaut GraalVM appl
   Micronaut (v2.3.0)
 
 22:28:04.190 [main] INFO  io.micronaut.runtime.Micronaut - Startup completed in 832ms. Server Running: http://localhost:8080```In a separate terminal, send a request to the service:![user input](../images/userinput.png)
-```bash$ curl http://localhost:8080/randomplay{"name":"Java Rules!"}```**native-image:**![user input](../images/userinput.png)
+```bash$ curl http://localhost:8080/randomplay{"name":"Java Rules!"}```**Create a native image**Next, let's build a native image of our application.Edit the `pom.xml` file and uncomment the Graal dependency (lines 93-98) and the Graal plugin (lines 125-147).  The native image build will take 1-3 minutes depending on your system resources.Package the application:![user input](../images/userinput.png)
+```bash$ ./mvnw package...[micronaut-graalvm-helloworld:12406]     (inline):   2,971.36 ms,  5.62 GB[micronaut-graalvm-helloworld:12406]    (compile):  49,922.64 ms,  6.91 GB[micronaut-graalvm-helloworld:12406]      compile:  61,715.08 ms,  6.91 GB[micronaut-graalvm-helloworld:12406]        image:   4,883.90 ms,  6.91 GB[micronaut-graalvm-helloworld:12406]        write:     760.46 ms,  6.91 GB[micronaut-graalvm-helloworld:12406]      [total]: 113,450.38 ms,  6.91 GB[INFO] ------------------------------------------------------------------------[INFO] BUILD SUCCESS[INFO] ------------------------------------------------------------------------[INFO] Total time:  01:58 min[INFO] Finished at: 2021-01-26T11:09:38-05:00[INFO] ------------------------------------------------------------------------```Now run the native image version:
+![user input](../images/userinput.png)
 ```bash$ target/micronaut-graalvm-helloworld
  __  __ _                                  _
 |  \/  (_) ___ _ __ ___  _ __   __ _ _   _| |_
@@ -32,7 +34,7 @@ In this exercise, we'll learn how to create a Hello World Micronaut GraalVM appl
 ```bash$ curl http://localhost:8080/randomplay{"name":"GraalVM Rocks!"}```Note the startup times for the JAR (**832ms**) versus the native image (**13ms**) applications.
 ### Deploying a JAR inside a containerWith this approach you only need the fat jar.Build a container image, make certain the docker daemon service is running (or use `podman`).![user input](../images/userinput.png)
 ```bash$ ./docker-build-jvm.sh```Start the container:![user input](../images/userinput.png)
-```bash$ docker run -p 8080:8080 helloworld-graal-jvm19:58:42.934 [main] INFO  io.micronaut.runtime.Micronaut - Startup completed in 642ms. Server Running: http://9c1ab24b58df:8080```Notice the container started in **642ms**.  Bet we can do better with the native image!
+```bash$ docker run -p 8080:8080 helloworld-graal-jvm __  __ _                                  _|  \/  (_) ___ _ __ ___  _ __   __ _ _   _| |_| |\/| | |/ __| '__/ _ \| '_ \ / _` | | | | __|| |  | | | (__| | | (_) | | | | (_| | |_| | |_|_|  |_|_|\___|_|  \___/|_| |_|\__,_|\__,_|\__|  Micronaut (v2.3.0)13:03:15.921 [main] INFO  io.micronaut.runtime.Micronaut - Startup completed in 656ms. Server Running: http://999bd40b5e54:8080```Notice the container started in **642ms**.  Bet we can do better with the native image!
 ![user input](../images/userinput.png)
 ```bash$ curl http://localhost:8080/randomplay{"name":"GraalVM Rocks!"}```
 Check the container CPU/memory usage:
@@ -43,7 +45,7 @@ $ docker stats <container-ID>```
 Quit the docker container by issuing a `CTRL-C` in the original terminal window.
 ### Deploying a native image inside a containerWith this approach you only need to build the fat jar and then use Docker/Podman to build the native image.Then build a container image, make certain the docker daemon service is running (or use `podman`).![user input](../images/userinput.png)
 ```bash$ ./docker-build.sh```Start the container:![user input](../images/userinput.png)
-```bash$ docker run -p 8080:8080 helloworld-graal/app/micronaut-graalvm-helloworld: /usr/lib/libstdc++.so.6: no version information available (required by /app/micronaut-graalvm-helloworld)15:34:41.145 [main] INFO  io.micronaut.runtime.Micronaut - Startup completed in 56ms. Server Running: http://aa22eb808a30:8080```Notice the container started in **56ms** compared to **642ms** with the JAR version.![user input](../images/userinput.png)
+```bash$ docker run -p 8080:8080 helloworld-graal __  __ _                                  _|  \/  (_) ___ _ __ ___  _ __   __ _ _   _| |_| |\/| | |/ __| '__/ _ \| '_ \ / _` | | | | __|| |  | | | (__| | | (_) | | | | (_| | |_| | |_|_|  |_|_|\___|_|  \___/|_| |_|\__,_|\__,_|\__|  Micronaut (v2.3.0)08:01:53.208 [main] INFO  io.micronaut.runtime.Micronaut - Startup completed in 64ms. Server Running: http://0d1168f199ff:8080```Notice the container started in **56ms** compared to **642ms** with the JAR version.![user input](../images/userinput.png)
 ```bash$ curl http://localhost:8080/randomplay{"name":"Java Rocks!"}```Once again, check the container CPU/memory usage:
 
 ![user input](../images/userinput.png)
