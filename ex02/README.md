@@ -312,7 +312,7 @@ In this exercise we will create a PGO file named `streams.iprof` via `java -Dgra
 
 ![user input](../images/userinput.png)
 
-`$ java -Dgraal.PGOInstrument=streams.iprof Streams 100000 200`
+`$ java -Djvmci.CompilerIdleDelay=0 -Dgraal.PGOInstrument=streams.iprof Streams 100000 200`
 
 Feel free to `more streams.iprof` to see the contents of the file.
 

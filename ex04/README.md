@@ -112,10 +112,12 @@ Here's the error output:
 
 
 ### A Note on Building on OSXIf you use a Mac, you will need to build your native images inside a **Linux container** if you want to deploy it inside a Docker container. If you stop to think about it, makes perfect sense, right?  You build on a Mac, you get a Mac executable.You will, from time to time, forget this and then you will see the following error when you deploy your app into a docker container:```textstandard_init_linux.go:211: exec user process caused "exec format error"```
-
+### Summary
 Of course, there are a number of frameworks you can use to develop your microservices applications including Micronaut, Quarkus, Helidon and Spring.  In fact. here's an interesting benchmark project comparing the various frameworks:
 
 * [Comparing Java frameworks: Quarkus, Micronaut and Spring Boot](https://github.com/ivangfr/graalvm-quarkus-micronaut-springboot) 
  
+
+
 
 ---<a href="../ex05/">    <img src="../images/noun_Next_511450_100.png"/></a>
