@@ -10,6 +10,8 @@ In the previous exercise, we discovered that GraalVM Enterprise can boost Java p
 The Java platform can optimize long-running processes and produce peak performance, but short-running processes often suffer from longer startup times and
 relatively high memory usage.
 
+For the next exercises, we'll be using source from the previous examples.
+
 For example, if we run the same application with a much smaller input text file called `small.txt` (around 1 KB instead of 150 MB), it seems to take an unreasonably long time and quite a bit of memory (at 70 MB) to run for such a small file. Below we use `-l` to print the memory used as well as time used.
 
 

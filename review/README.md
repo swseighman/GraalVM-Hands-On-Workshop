@@ -26,6 +26,11 @@ There are additional resources and documentation on the GraalVM, we encourage yo
 * [GraalVM Quick Reference](https://www.graalvm.org/uploads/1p/graalvm-quick-reference_a4.pdf)
 * [GraalVM on GitHub](https://github.com/oracle/graal)
 * [GraalVM Community Edition Builds](https://github.com/graalvm/graalvm-ce-builds/releases)
+* [GraalVM Webcasts](https://www.oracle.com/graalvm/webcasts/)
+* Connect with us on Twitter: @GraalVM
+* Contact us: graalvmcomms_ww@oracle.com
+
+
 
 
 ## Next Steps
