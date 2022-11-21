@@ -1,7 +1,8 @@
 ## Installing GraalVM
-The installation instructions for GraalVM can be found [here](https://docs.oracle.com/en/graalvm/enterprise/20/docs/getting-started/installation-linux/).
 
-The prerequsites for getting the native image component working are described in the [docs](https://docs.oracle.com/en/graalvm/enterprise/20/docs/reference-manual/enterprise-native-image/).
+The installation instructions for GraalVM can be found [here](https://docs.oracle.com/en/graalvm/enterprise/22/docs/getting-started/installation-linux/).
+
+The prerequisites for getting the native image component working are described in the [docs](https://docs.oracle.com/en/graalvm/enterprise/22/docs/reference-manual/enterprise-native-image/).
 
 ### Native Image Prerequisites
 
@@ -9,15 +10,21 @@ Native Image requires the installation of `glibc-devel`, `zlib-devel`, and `gcc`
 
 Oracle Linux using `yum` package manager
 
-`$ sudo yum install gcc glibc-devel zlib-devel`
+```shell
+$ sudo yum install gcc glibc-devel zlib-devel
+```
 
 Ubuntu Linux using `apt-get` package manager
 
-`$ sudo apt-get install build-essential libz-dev zlib1g-dev`
+```shell
+$ sudo apt-get install build-essential libz-dev zlib1g-dev
+```
 
 Other Linux using `rpm` package manager
 
-`$ sudo dnf install gcc glibc-devel zlib-devel libstdc++-static`
+```shell
+$ sudo dnf install gcc glibc-devel zlib-devel libstdc++-static
+```
 
 MacOS
 

@@ -1,9 +1,8 @@
 ## Exercise 1: High-Performance JIT Compiler for Java
 
+The GraalVM compiler is a dynamic just-in-time (JIT) compiler, written in Java, that transforms bytecode into machine code. The GraalVM compiler integrates with the Java HotSpot VM, which supports a compatible version of the JVM Compiler Interface (JVMCI). JVMCI is a privileged, low-level interface to the JVM, enabling a compiler written in Java to be used by the JVM as a dynamic compiler (see [JEP 243](https://openjdk.org/jeps/243))
 
-The GraalVM compiler is a dynamic just-in-time (JIT) compiler, written in Java, that transforms bytecode into machine code. The GraalVM compiler integrates with the Java HotSpot VM, which supports a compatible version of the JVM Compiler Interface (JVMCI). JVMCI is a privileged, low-level interface to the JVM, enabling a compiler written in Java to be used by the JVM as a dynamic compiler (see JEP 243)
-
-It can read metadata from the VM, such as method bytecode, and install machine code into the VM . GraalVM includes a version of the HotSpot JVM that supports JVMCI.
+It can read metadata from the VM, such as method bytecode, and install machine code into the VM. GraalVM includes a version of the HotSpot JVM that supports JVMCI.
 
 GraalVM supports two operating modes, the _**JIT compiler**_, and _**AOT (Ahead-of-Time) compiler**_.  We'll explore both in the following exercises, let's begin with the JIT compiler and examine how it boosts application performance.
 
@@ -15,15 +14,15 @@ You can simply clone the source code by using this command:
 
 ![user input](../images/userinput.png)
 
-```
+```shell
 $ git clone https://github.com/marthenlt/native-image-workshop.git
 ```
 
-Once you've cloned the repo, change directory to `native-image-workshop` and unzip `large.zip`file. See the following commands:
+Once you've cloned the repo, change directory to `native-image-workshop` and unzip `large.zip` file. See the following commands:
 
 ![user input](../images/userinput.png)
 
-```
+```shell
 $ cd native-image-workshop
 $ unzip large.zip
 ```
@@ -98,7 +97,9 @@ To compile, use the following command:
 
 ![user input](../images/userinput.png)
 
-`$ javac TopTen.java`
+```shell
+$ javac TopTen.java
+```
 
 If we run the `java` command included in GraalVM, we'll automatically be using
 the GraalVM JIT compiler (no extra configuration is required). Rather than set up a complicated micro-benchmark, we'll use the `time` command to display the real, wall-clock elapsed time to run the entire program from start to finish.
@@ -107,7 +108,9 @@ Use the command below to measure the time GraalVM Enterprise takes to run `TopTe
 
 ![user input](../images/userinput.png)
 
-`$ time java TopTen large.txt`
+```shell
+$ time java TopTen large.txt
+```
 
 The output will appear similar to the example below (results are dependent on your system/laptop).
 
@@ -148,11 +151,13 @@ java TopTen large.txt  11.62s user 0.49s system 114% cpu 10.535 total
 
 GraalVM is written in Java, rather than C++ like other JIT compilers. This allows us to quickly add improvements with powerful new optimizations (such as partial escape analysis) that aren't available in the standard HotSpot JIT compilers. This can help your Java programs run significantly faster.
 
-To run without the GraalVM JIT compiler, we can use the `-XX:-UseJVMCICompiler` flag. JVMCI is the interface between GraalVM and the JVM. You could also compare against your standard JVM as well.
+To run without the GraalVM JIT compiler, we can use the [`-XX:-UseJVMCICompiler`](https://www.graalvm.org/22.2/reference-manual/java/options/) flag. JVMCI is the interface between GraalVM and the JVM. You could also compare against your standard JVM as well.
 
-![](../images/userinput.png)
+![user input](../images/userinput.png)
 
-`$ time java -XX:-UseJVMCICompiler TopTen large.txt`
+```shell
+$ time java -XX:-UseJVMCICompiler TopTen large.txt
+```
 
 On Linux
 
