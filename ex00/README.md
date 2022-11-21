@@ -10,15 +10,21 @@ Native Image requires the installation of `glibc-devel`, `zlib-devel`, and `gcc`
 
 Oracle Linux using `yum` package manager
 
-`$ sudo yum install gcc glibc-devel zlib-devel`
+```shell
+$ sudo yum install gcc glibc-devel zlib-devel
+```
 
 Ubuntu Linux using `apt-get` package manager
 
-`$ sudo apt-get install build-essential libz-dev zlib1g-dev`
+```shell
+$ sudo apt-get install build-essential libz-dev zlib1g-dev
+```
 
 Other Linux using `rpm` package manager
 
-`$ sudo dnf install gcc glibc-devel zlib-devel libstdc++-static`
+```shell
+$ sudo dnf install gcc glibc-devel zlib-devel libstdc++-static
+```
 
 MacOS
 
