@@ -1,7 +1,8 @@
 ## Installing GraalVM
-The installation instructions for GraalVM can be found [here](https://docs.oracle.com/en/graalvm/enterprise/20/docs/getting-started/installation-linux/).
 
-The prerequsites for getting the native image component working are described in the [docs](https://docs.oracle.com/en/graalvm/enterprise/20/docs/reference-manual/enterprise-native-image/).
+The installation instructions for GraalVM can be found [here](https://docs.oracle.com/en/graalvm/enterprise/22/docs/getting-started/installation-linux/).
+
+The prerequisites for getting the native image component working are described in the [docs](https://docs.oracle.com/en/graalvm/enterprise/22/docs/reference-manual/enterprise-native-image/).
 
 ### Native Image Prerequisites
 
