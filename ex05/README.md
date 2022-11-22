@@ -1,28 +1,34 @@
 ## Exercise 5: Spring Boot and GraalVM Native Image
 
-![](../images/spring.png)
+![Spring Boot](../images/spring.png)
 
-This exercise will focus on GraalVM and Spring Boot and was tested with Spring Boot 2.4.2.
+This exercise will focus on GraalVM and Spring Boot and was tested with Spring
+Boot 2.4.2.
 
 ### Exercise 5.1: Clone the sample SpringBoot Application
 
-Clone the Spring Boot sample application that uses GraalVM Native Image. Note that this project is developed by the Spring framework team and is still in an experimental phase.  See [this link](https://github.com/spring-projects-experimental/spring-native) for additional information.
+Clone the Spring Boot sample application that uses GraalVM Native Image. Note
+that this project is developed by the Spring framework team and is still in an
+experimental phase. See
+[this link](https://github.com/spring-projects-experimental/spring-native) for
+additional information.
 
-![user input](../images/userinput.png)
+![User Input](../images/userinput.png)
 
-```bash
+```shell
 $ git clone https://github.com/spring-projects-experimental/spring-native.git
 ```
 
 ### Exercise 5.2: Compile and run the application using GraalVM Native Image
 
-In order to proceed with compiling and building this application, you need to have Apache Maven version 3.x installed on your system.
+In order to proceed with compiling and building this application, you need to
+have Apache Maven version 3.x installed on your system.
 
 If you type:
 
-![user input](../images/userinput.png)
+![User Input](../images/userinput.png)
 
-```bash
+```shell
 $ mvn --version
 ```
 
@@ -38,21 +44,35 @@ OS name: "mac os x", version: "10.15.7", arch: "x86_64", family: "mac"
 
 Once Apache Maven is verified, you can proceed with the following commands:
 
-![user input](../images/userinput.png)
+![User Input](../images/userinput.png)
 
-```bash
+```shell
 $ cd spring-native
 $ ./build.sh
-$ cd spring-native-samples/commandlinerunner
+```
+
+This can take some time.  Once ready, proceed with the following commands:
+
+```shell
+$ cd samples/commandlinerunner
 $ ./build.sh
 ```
+
 First, execute the `commandlinerunner` jar version:
 
-![user input](../images/userinput.png)
+![User Input](../images/userinput.png)
 
-```bash
+```shell
 $ java -jar target/commandlinerunner-0.0.1-SNAPSHOT.jar
+```
 
+> TODO:  I am getting the following error.
+>
+> ```
+> no main manifest attribute, in target/commandlinerunner-0.0.1-SNAPSHOT.jar
+> ```
+
+```
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
 ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
@@ -78,10 +98,10 @@ SEVERE: ERROR log message
 
 Next, run the native image version:
 
-![user input](../images/userinput.png)
+![User Input](../images/userinput.png)
 
 ```bash
-$ target/commandlinerunner
+$ ./target/commandlinerunner
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -108,4 +128,6 @@ SEVERE: ERROR log message
 
 Notice the startup times comparing the traditional Spring fat-jar **(0.674 seconds**) vs GraalVM Native Image (**0.103 seconds**).
 
----<a href="../review/">    <img src="../images/noun_Next_511450_100.png"/></a>
+---
+
+<a href="../review/"><img src="../images/noun_Next_511450_100.png"/></a>
