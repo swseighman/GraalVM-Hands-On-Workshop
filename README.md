@@ -39,7 +39,7 @@ In preparation for the workshop, you'll need to ready your system/laptop.
 **Note**:
 
 Throughout the workshop, when you see a red computer icon
-![user input](images/userinput.png) it indicates a command that you'll need to
+![User Input](images/userinput.png) it indicates a command that you'll need to
 enter in your terminal.
 
 ## Table of Contents

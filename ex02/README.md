@@ -12,8 +12,8 @@ Some of the benefits of native image are:
 - **Lower memory** footprint
 
 In the previous exercise, we discovered that GraalVM Enterprise can boost Java
-program performance without changing any code.  In the next exercise, we will be
-using GraalVM Native Image to compile Java Bytecode into a native binary
+program performance without changing any code. In the next exercise, we will be
+using GraalVM Native Image to compile Java bytecode into a native binary
 executable file.
 
 ### Graal AOT
@@ -30,7 +30,7 @@ unreasonably long time and quite a bit of memory (at 70 MB) to run for such a
 small file. Below we use `-v`, or `-l` depending on the OS, to print the memory
 used as well as time used.
 
-![user input](../images/userinput.png)
+![User Input](../images/userinput.png)
 
 - Linux
 
@@ -77,10 +77,10 @@ compiler like `gcc` works.
 ### Graal AOT - _Creating Binary Executable Using Native Image_
 
 Now let's create our first binary executable file using GraalVM Native Image
-from our existing TopTen bytecode.  Execute the command below to create a
+from our existing TopTen bytecode. Execute the command below to create a
 `TopTen` native binary executable:
 
-![user input](../images/userinput.png)
+![User Input](../images/userinput.png)
 
 ```shell
 $ native-image --no-server --no-fallback TopTen
@@ -119,7 +119,7 @@ standard system libraries. We could also move just this one file to a system
 without a JVM installed and run it to verify it doesn't use a JVM or any other
 files. It's also pretty small, this executable is less than 7.5MB.
 
-![user input](../images/userinput.png)
+![User Input](../images/userinput.png)
 
 - Linux
 
@@ -157,7 +157,7 @@ program on the JVM. It's so fast that you don't notice the time taken when
 using it at the command line - you don't feel that pause you always get when
 executing a short-running command with the JVM.
 
-![user input](../images/userinput.png)
+![User Input](../images/userinput.png)
 
 - Linux
 
@@ -200,7 +200,7 @@ only 6.1 MB memory, whereas GraalVM JIT version requires 76.1 MB memory. Thats
 approximately a **11x smaller memory footprint**.
 
 Application start-up is also worth mentioning, see the "Elapsed (wall clock)"
-from the 2 examples.  GraalVM JIT elapsed (wall clock) time is 26 ms (0:00.26),
+from the 2 examples. GraalVM JIT elapsed (wall clock) time is 26 ms (0:00.26),
 GraalVM AOT elapsed (wall clock) time is 0 ms (0:00.00) ... too fast for the
 `time` utility to measure.
 
@@ -215,7 +215,7 @@ file to improve throughput of our native executable application.
 `PGO` is a way to _teach_ GraalVM AOT compiler to further optimize the
 throughput of the resulted native binary executable application.
 
-For this exercise we will be using the `Streams.java` program below.  Open your
+For this exercise we will be using the `Streams.java` program below. Open your
 favorite IDE and paste the code into a new file called `Streams.java`.
 
 ```java
@@ -317,7 +317,7 @@ class Person {
 
 Compile it using the command below:
 
-![user input](../images/userinput.png)
+![User Input](../images/userinput.png)
 
 ```shell
 $ javac Streams.java
@@ -325,7 +325,7 @@ $ javac Streams.java
 
 And then create the native binary executable using the following command:
 
-![user input](../images/userinput.png)
+![User Input](../images/userinput.png)
 
 ```shell
 $ native-image --no-server --no-fallback Streams
@@ -333,7 +333,7 @@ $ native-image --no-server --no-fallback Streams
 
 Run the native binary executable:
 
-![user input](../images/userinput.png)
+![User Input](../images/userinput.png)
 
 ```shell
 $ ./streams 100000 200
@@ -384,7 +384,7 @@ There are 2 methods for creating a PGO file:
 In this exercise we will create a PGO file named `streams.iprof` via
 `java -Dgraal.PGOInstrument`, we can complete that by executing below command:
 
-![user input](../images/userinput.png)
+![User Input](../images/userinput.png)
 
 ```shell
 $ java -XX:JVMCICompilerIdleDelay=0 -Dgraal.PGOInstrument=streams.iprof Streams 100000 200
@@ -461,9 +461,10 @@ The contents is similar to this:
 
 ```
 
-Next we can then re-create the `topten` binary executable with our PGO `streams.iprof`, type the following command:
+Next we can then re-create the `topten` binary executable with our PGO
+`streams.iprof`, type the following command:
 
-![user input](../images/userinput.png)
+![User Input](../images/userinput.png)
 
 ```shell
 $ native-image --no-server --no-fallback --pgo=streams.iprof Streams
@@ -471,7 +472,7 @@ $ native-image --no-server --no-fallback --pgo=streams.iprof Streams
 
 Then we execute the same benchmark again:
 
-![user input](../images/userinput.png)
+![User Input](../images/userinput.png)
 
 ```shell
 $ ./streams 100000 200
@@ -514,7 +515,7 @@ Another way of creating a PGO file is using `native-image --pgo-instrument`.
 This will create a `default.iprof` file from the `native-image` tool directly.
 Execute the command:
 
-![user input](../images/userinput.png)
+![User Input](../images/userinput.png)
 
 ```shell
 $ native-image --pgo-instrument Streams
@@ -526,7 +527,7 @@ command.
 You need to run it with the newly created binary `streams` executable file again.
 Execute below command:
 
-![user input](../images/userinput.png)
+![User Input](../images/userinput.png)
 
 ```shell
 $ ./streams 100000 200
@@ -538,7 +539,7 @@ execute `more default.iprof` to see the contents.
 Final step is to create an optimized `Streams` native binary executable using
 the following command:
 
-![user input](../images/userinput.png)
+![User Input](../images/userinput.png)
 
 ```shell
 $ native-image --pgo Streams
@@ -546,7 +547,7 @@ $ native-image --pgo Streams
 
 And re-run our benchmark test again:
 
-![user input](../images/userinput.png)
+![User Input](../images/userinput.png)
 
 ```shell
 $ ./streams 100000 200
@@ -611,7 +612,7 @@ with the configuration javaagent.
 
 ![User Input](../images/userinput.png)
 
-Let's try an example.  In your favorite IDE, create a new Java program called
+Let's try an example. In your favorite IDE, create a new Java program called
 `HelloReflection.java`:
 
 ```java
@@ -681,7 +682,7 @@ $ native-image HelloReflection
 ```
 
 Executing the above command does not actually produce a native image of the
-application, but only a so-called “fallback image”:
+application, but only a so-called "fallback image":
 
 ```bash
 Warning: Reflection method java.lang.Class.getMethod invoked at HelloReflection.main(HelloReflection.java:14)
@@ -864,6 +865,4 @@ runtime, and allows you to create smaller container images.
 
 ---
 
-<a href="../ex03/">
-    <img src="../images/noun_Next_511450_100.png"/>
-</a>
+<a href="../ex03/"><img src="../images/noun_Next_511450_100.png"/></a>
