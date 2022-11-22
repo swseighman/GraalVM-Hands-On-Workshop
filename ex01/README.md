@@ -200,4 +200,8 @@ You'll see similar results if you use GraalVM Community Edition, but they won't 
 
 As you can see, by simply replacing the underlying JIT compiler, you'll realize improved performance from your existing Java applications.
 
----<a href="../ex02/">    <img src="../images/noun_Next_511450_100.png"/></a>
+---
+
+<a href="../ex02/">
+    <img src="../images/noun_Next_511450_100.png"/>
+</a>

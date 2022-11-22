@@ -36,4 +36,8 @@ MacOS
 
 Now we're ready to begin the exercises.
 
----<a href="../ex01/">    <img src="../images/noun_Next_511450_100.png"/></a>
+---
+
+<a href="../ex01/">
+    <img src="../images/noun_Next_511450_100.png"/>
+</a>
