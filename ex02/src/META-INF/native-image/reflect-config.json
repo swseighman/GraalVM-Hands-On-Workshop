@@ -1,9 +1,0 @@
-[
-{
-  "name":"HelloReflection",
-  "methods":[
-    {"name":"bar","parameterTypes":[] }, 
-    {"name":"foo","parameterTypes":[] }
-  ]
-}
-]

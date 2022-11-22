@@ -587,7 +587,7 @@ compared to the initial **4686 milliseconds** which results in more than
 Great, we have just demonstrated how to optimize an AOT binary executable file
 using PGO.
 
-### The Closed World Assumption (_TODO: Was not able to obtain the same results_)
+### The Closed World Assumption
 
 GraalVM native image build uses the closed world assumption, meaning that all
 the bytecode in the application needs to be known (observed and analyzed) at the
@@ -738,6 +738,7 @@ Java HotSpot VM. Operations that are traced are, for example, `Class.forName`,�
 ```shell
 $ mkdir -p META-INF/native-image
 $ java -agentlib:native-image-agent=config-output-dir=META-INF/native-image HelloReflection foo
+Running foo
 ```
 
 This command creates a directory `META-INF/native-image` with the file 
@@ -746,7 +747,7 @@ which we discuss later in this article. The file `reflection-config.json` make
 the method `HelloReflection.foo` accessible via reflection:
 
 ```shell
-% more ./META-INF/native-image/reflect-config.json
+$ more ./META-INF/native-image/reflect-config.json
 ```
 
 ```json
